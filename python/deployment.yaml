@@ -34,6 +34,8 @@ spec:
         - fastapi_app.main:app
         - --preload
         - -k=uvicorn.workers.UvicornWorker
+        - --log-config=logging.conf
+        - -c=gunicorn_conf.py
         env:
           - name: HOST
             value: "0.0.0.0"

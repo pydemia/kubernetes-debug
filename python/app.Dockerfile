@@ -8,11 +8,13 @@ WORKDIR /workdir
 
 COPY ./fastapi_app /workdir/fastapi_app
 COPY ./setup.py /workdir/setup.py
+COPY ./debugserver.py /workdir/debugserver.py
+COPY ./logging.conf /workdir/logging.conf
+COPY ./gunicorn_conf.py /workdir/gunicorn_conf.py
 COPY ./requirements.txt /workdir/requirements.txt
 
 RUN pip install -r ./requirements.txt && \
     pip install ./ --no-cache-dir
 
-# CMD uvicorn fastapi_app.main:app --reload
-CMD  gunicorn fastapi_app.main:app --reload -k=uvicorn.workers.UvicornWorker
+CMD gunicorn fastapi_app.main:app --reload -k=uvicorn.workers.UvicornWorker --log-config logging.conf -c gunicorn_conf.py
 # CMD python -m ptvsd --host ${HOST} --port ${DEBUG_PORT} -m gunicorn fastapi_app.main:app --reload -k=uvicorn.workers.UvicornWorker
