@@ -2,40 +2,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fastapi-demo
+  name: springboot-demo
   namespace: default
   labels:
-    app/group: fastapi-demo
-    language: python
+    app/group: springboot-demo
+    language: java
     app/profile: prod
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app/group: fastapi-demo
-      language: python
+      app/group: springboot-demo
+      language: java
       app/profile: prod
   template:
     metadata:
       labels:
-        app/group: fastapi-demo
-        language: python
+        app/group: springboot-demo
+        language: java
         app/profile: prod
     spec:
       containers:
       - name: server
-        image: pydemia/fastapi-demo:latest
+        image: pydemia/springboot-demo:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
         - containerPort: 5678
-        args:
-        - gunicorn
-        - fastapi_app.main:app
-        - --preload
-        - -k=uvicorn.workers.UvicornWorker
-        - --log-config=logging.conf
-        - -c=gunicorn_conf.py
         env:
           - name: HOST
             value: "0.0.0.0"
@@ -58,11 +51,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: fastapi-demo
+  name: springboot-demo
   namespace: default
   labels:
-    app/group: fastapi-demo
-    language: python
+    app/group: springboot-demo
+    language: java
 spec:
   type: ClusterIP
   ports:
@@ -70,5 +63,5 @@ spec:
       targetPort: 8000
       protocol: TCP
   selector:
-    app/group: fastapi-demo
-    language: python
+    app/group: springboot-demo
+    language: java
