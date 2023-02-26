@@ -4,22 +4,22 @@ kind: Config
 build:
   artifacts:
   # NO TAG SHOULD BE SPECIFIED!!!!!!!!!!
-  - image: pydemia/fastapi-demo
-  # - image: pydemia/fastapi-demo:latest
+  - image: pydemia/springboot-demo
+  # - image: pydemia/springboot-demo:latest
     context: ./
-    # context: ./python/
+    # context: ./
     # sync:
     #   manual:
-    #   - src: "./python"
+    #   - src: "./"
     #     dest: "/workdir/"
     #   # infer: ["**/*"]
     docker:
       dockerfile: app-skaffold.Dockerfile
-      # target: pydemia/fastapi-demo-debug
+      # target: pydemia/springboot-demo-debug
       noCache: false
   #   kaniko:
   #     dockerfile: app-skaffold.Dockerfile
-  #     target: pydemia/fastapi-demo-debug
+  #     target: pydemia/springboot-demo-debug
   #     cleanup: false
   #     insecure: false
   #     noPush: false
@@ -40,12 +40,12 @@ deploy:
     - deployment-skaffold.yaml
 portForward:
 - resourceType: deployment
-  resourceName: fastapi-demo-skaffold
+  resourceName: springboot-demo-skaffold
   namespace: default
   port: 8000
   localPort: 8000
 - resourceType: deployment
-  resourceName: fastapi-demo-skaffold
+  resourceName: springboot-demo-skaffold
   namespace: default
   port: 5678
   localPort: 5678
@@ -58,8 +58,8 @@ profiles:
 #   build:
 #     googleCloudBuild: {}
 #     artifacts:
-#     - image: pydemia/fastapi-demo:debug
-#       context: ${workspaceFolder}/python
+#     - image: pydemia/springboot-demo:debug
+#       context: ${workspaceFolder}
 #       sync:
 #         infer:
 #         - '**/*'

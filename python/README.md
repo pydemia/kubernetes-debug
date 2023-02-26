@@ -19,3 +19,6 @@ kubectl apply -f sa-with-imagepullsecret.yaml
 ```bash
 kubectl apply -f deployment.yaml
 ```
+
+* Swagger: `/docs`
+  

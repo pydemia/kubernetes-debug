@@ -1,5 +1,5 @@
 import os
-import uvicorn
+import gunicorn
 # from fastapi_app.main import app
 
 
