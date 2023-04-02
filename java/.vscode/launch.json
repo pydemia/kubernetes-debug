@@ -1,0 +1,60 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "java",
+        "name": "Springboot",
+        "request": "launch",
+        "mainClass": "com.in28minutes.springboot.rest.example.SpringBoot2RestServiceApplication",
+        "projectName": "spring-boot-2-rest-service-swagger",
+        "cwd": "${workspaceFolder}",
+        "args": "${-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=,quiet=y}",
+        "vmArgs": "-Dserver.port=8000"
+      },
+      {
+        "name": "Attach to Kubernetes Pod (Java)",
+        "type": "cloudcode.kubernetes",
+        "request": "attach",
+        "language": "Java",
+        "debugPort": 5678,
+        "podSelector": {
+          "app/group": "springboot-demo",
+          "language": "java",
+          "app/profile": "prod"
+        },
+        "localRoot": "${workspaceFolder}",
+        "remoteRoot": "/workdir"
+        //   "remoteRoot": "/workdir/spring-boot-2-rest-service-with-swagger"
+      },
+      {
+        "name": "Cloud-code: Run/Debug on Kubernetes",
+        "type": "cloudcode.kubernetes",
+        "request": "launch",
+        "skaffoldConfig": "${workspaceFolder}/skaffold.yaml",
+        "watch": true,
+        "cleanUp": true,
+        "portForward": true,
+        "imageRegistry": "docker.io/pydemia",
+        "internalConsoleOptions": "openOnSessionStart",
+        "debug": [
+          {
+            "image": "pydemia/springboot-demo:latest",
+            "containerName": "server",
+            "sourceFileMap": {
+              "${workspaceFolder}/spring-boot-2-rest-service-with-swagger": "/workdir/spring-boot-2-rest-service-with-swagger"
+            }
+          },
+          {
+            "image": "pydemia/springboot-demo",
+            "containerName": "server",
+            "sourceFileMap": {
+              "${workspaceFolder}/spring-boot-2-rest-service-with-swagger": "/workdir/spring-boot-2-rest-service-with-swagger"
+            }
+          }
+        ]
+      }
+    ]
+}
