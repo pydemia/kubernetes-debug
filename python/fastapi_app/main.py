@@ -1,7 +1,8 @@
 from typing import Union
 
-from fastapi import FastAPI
 import logging
+import socket
+from fastapi import FastAPI
 
 
 app = FastAPI()
@@ -17,7 +18,11 @@ def read_root():
 
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
-    resp = {"item_id": item_id, "q": q}
+    resp = {
+        "item_id": item_id,
+        "q": q,
+        "machine": socket.gethostname(),
+    }
     log.debug(f"request to: 'read_item'")
     log.debug(f"response is:\n{resp}")
     return resp

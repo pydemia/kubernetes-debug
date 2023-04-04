@@ -21,6 +21,7 @@ brew install datawire/blackbird/telepresence-arm64
 
 ```bash
 $ telepresence helm install
+# $ telepresence helm upgrade
 Launching Telepresence User Daemon
 
 Traffic Manager installed successfully
@@ -37,15 +38,21 @@ traffic-manager-679d87fc-bkk64   1/1     Running   0          84s
 Intercept your service
 
 ```bash
-$ telepresence connect
+telepresence connect \
+  --context arn:aws:eks:ap-northeast-2:687974018385:cluster/aiip-dev
+$ telepresence connect  # --cluster kind-kind-local
 Launching Telepresence Root Daemon
 Need root privileges to run: /opt/homebrew/bin/telepresence daemon-foreground ${HOME}/Library/Logs/telepresence '${HOME}/Library/Application Support/telepresence'
 Password:
 Connected to context kind-kind-local (https://127.0.0.1:53564)
+
+# $ telepresence connect --context kind-kind-local
+# $ telepresence connect --cluster kind-kind-local
+# $ tp quit
 ```
 
 ```bash
-$ ❯  curl -ik https://kubernetes.default
+$ curl -ik https://kubernetes.default
 HTTP/2 403
 audit-id: d6b5822c-8379-4891-a48b-ae9f86cae2f4
 cache-control: no-cache, private
@@ -69,7 +76,7 @@ date: Sun, 02 Apr 2023 18:57:45 GMT
 ```
 
 ```bash
-$ telepresence list
+$ telepresence list -n default
 No Workloads (Deployments, StatefulSets, or ReplicaSets)
 ```
 
@@ -149,12 +156,19 @@ telepresence intercept \
   -n default \
   fastapi-demo \
   --port 8000:8000 \
+  --env-file fastapi-telepresence.env
+
+telepresence intercept \
+  -n default \
+  fastapi-demo \
+  --port 18000:8000 \
   --mount=false \
   --env-file fastapi-telepresence.env
 
 telepresence intercept \
   -n default \
   fastapi-demo \
+  --service fastapi-demo \
   --port 18000:8000 \
   --mount=/tmp/ \
   --env-file fastapi-telepresence.env
@@ -168,6 +182,11 @@ fastapi-demo: intercepted
    Workload kind : Deployment
    Destination   : 127.0.0.1:18000
    Intercepting  : all TCP requests
+```
+
+```bash
+curl fastapi-demo:8000 \
+  -H 'x-telepresence-intercept-id: 5f12ef1f-c2d1-481c-8de3-3db738b93d58:fastapi-demo-default'
 ```
 
 ```bash

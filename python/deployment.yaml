@@ -45,11 +45,11 @@ spec:
             value: "5678"
         resources:
           requests:
-            memory: "3G"
-            cpu: "500m"
+            memory: "500M"
+            cpu: "200m"
           limits:
-            memory: "3G"
-            cpu: "1"
+            memory: "1G"
+            cpu: "500m"
         readinessProbe:
           tcpSocket:
             port: 8000
