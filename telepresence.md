@@ -2,12 +2,37 @@
 
 See: https://www.telepresence.io/docs/latest/quick-start/
 
+## Concept
+See: https://www.getambassador.io/docs/telepresence/latest/concepts/intercepts?intercept=personal
+
+#### `--single-user-mode`
+
+![Telepresence Concept: Single](images/telepresence_concept_single.png)
+
+####  `--team-mode`
+
+![Telepresence Concept: Team](images/telepresence_concept_team.png)
+
+
+## Architecture
+
+![Telepresence Architecture](images/telepresence_architecture.png)
 
 ## Installation
 
 ### Install it in a client
 
-Mac
+#### Linux
+
+```bash
+# 1. Download the latest binary (~50 MB):
+sudo curl -fL https://app.getambassador.io/download/tel2/linux/amd64/latest/telepresence -o /usr/local/bin/telepresence
+
+# 2. Make the binary executable:
+sudo chmod a+x /usr/local/bin/telepresence
+```
+
+#### Mac
 
 ```bash
 # Intel Mac
@@ -21,6 +46,7 @@ brew install datawire/blackbird/telepresence-arm64
 
 ```bash
 $ telepresence helm install
+# $ telepresence helm install --team-mode
 # $ telepresence helm upgrade
 Launching Telepresence User Daemon
 
@@ -192,3 +218,10 @@ curl fastapi-demo:8000 \
 ```bash
 $ telepresence leave fastapi-demo-default
 ```
+
+and more:
+
+* [Client-side config](https://www.getambassador.io/docs/telepresence/latest/reference/config)
+* [Server-side config](https://www.getambassador.io/docs/telepresence/latest/reference/cluster-config)
+* [Using Docker for intercept](https://www.getambassador.io/docs/telepresence/latest/reference/docker-run#using-docker-for-intercepts)
+* [Official Docs](https://www.getambassador.io/docs/telepresence)
